@@ -15,10 +15,15 @@ namespace OnlineExam.Infrastructure.Configurations
         {
             builder.Property(u => u.FirstName).IsRequired().HasMaxLength(100);
             builder.Property(u => u.LastName).IsRequired().HasMaxLength(100);
+            builder.Property(u => u.PhoneNumber).HasMaxLength(100);
+
 
             builder.HasMany(u => u.ExamResults)
                    .WithOne(er => er.User)
                    .HasForeignKey(er => er.UserId);
+
+            builder.Property(u => u.Role)
+                   .HasConversion<string>();
         }
     }
 }

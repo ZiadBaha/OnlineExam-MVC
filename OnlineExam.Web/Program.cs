@@ -10,6 +10,8 @@ builder.Services.AddControllersWithViews();
 // Organize the services in separate classes using extension methods
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 var app = builder.Build();
 
