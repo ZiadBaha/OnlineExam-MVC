@@ -1,0 +1,16 @@
+﻿@model OnlineExam.Core.DTOs.Program.ExamDto.GetExamDto
+
+@{
+    ViewData["Title"] = "Exam Details";
+}
+
+<h1>Exam Details</h1>
+
+<div>
+    <p><strong>Title:</strong> @Model.Title</p>
+    <p><strong>Difficulty:</strong> @Model.Difficulty</p>
+</div>
+
+<a href="@Url.Action("Edit", "Exam", new { id = Model.Id })" class="btn btn-warning">Edit</a>
+<a href="@Url.Action("Delete", "Exam", new { id = Model.Id })" class="btn btn-danger">Delete</a>
+<a href="@Url.Action("Index", "Exam")" class="btn btn-secondary">Back to List</a>

@@ -7,6 +7,7 @@ using OnlineExam.Application.Services;
 using OnlineExam.Infrastructure.Repositories.Auth;
 using OnlineExam.Application.Services.Admin;
 using OnlineExam.Infrastructure.Repositories.Auth.Admin;
+using OnlineExam.Core.DTOs.Program.ExamDto;
 
 
 namespace OnlineExam.Web.Extentions
@@ -27,8 +28,11 @@ namespace OnlineExam.Web.Extentions
             // Add additional services like repositories
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IAdminUserService, AdminUserService>();
+            services.AddScoped<IGenericCrudService<AddExamDto, UpdateExamDto, GetExamDto>, ExamService>();
+
 
             return services;
         }
+
     }
 }

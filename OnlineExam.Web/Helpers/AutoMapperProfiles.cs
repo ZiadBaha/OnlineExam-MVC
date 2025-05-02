@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using OnlineExam.Core.DTOs.Identity;
+using OnlineExam.Core.DTOs.Program.ExamDto;
+using OnlineExam.Core.Entities;
 using OnlineExam.Core.Entities.Identity;
 using OnlineExam.Core.Enums;
 
@@ -30,6 +32,12 @@ namespace OnlineExam.Web.Helpers
             CreateMap<ResetPasswordDto, AppUser>();
 
             CreateMap<UpdateUserDto, AppUser>().ReverseMap();
+
+
+
+            CreateMap<AddExamDto, Exam>();
+            CreateMap<UpdateExamDto, Exam>();
+            CreateMap<Exam, GetExamDto>();
 
         }
     }

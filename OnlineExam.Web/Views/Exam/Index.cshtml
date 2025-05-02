@@ -1,0 +1,33 @@
+﻿@model List<OnlineExam.Core.DTOs.Program.ExamDto.GetExamDto>
+
+@{
+    ViewData["Title"] = "Exams List";
+}
+
+<h1>Exams List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Difficulty</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var exam in Model)
+        {
+            <tr>
+                <td>@exam.Title</td>
+                <td>@exam.Difficulty</td>
+                <td>
+                    <a href="@Url.Action("Details", "Exam", new { id = exam.Id })" class="btn btn-info">Details</a>
+                    <a href="@Url.Action("Edit", "Exam", new { id = exam.Id })" class="btn btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", "Exam", new { id = exam.Id })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "Exam")" class="btn btn-primary">Create New Exam</a>

@@ -1,0 +1,14 @@
+﻿@model OnlineExam.Core.DTOs.Program.ExamDto.GetExamDto
+
+@{
+    ViewData["Title"] = "Delete Exam";
+}
+
+<h1>Delete Exam</h1>
+
+<p>Are you sure you want to delete the exam titled "<strong>@Model.Title</strong>"?</p>
+
+<form asp-action="ConfirmDelete" method="post">
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a href="@Url.Action("Index", "Exam")" class="btn btn-secondary">Cancel</a>
+</form>

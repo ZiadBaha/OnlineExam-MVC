@@ -1,4 +1,5 @@
-﻿@model OnlineExam.Core.DTOs.Identity.UpdateUserDto
+﻿@using OnlineExam.Core.Enums
+@model OnlineExam.Core.DTOs.Identity.UpdateUserDto
 
 @{
     ViewData["Title"] = "Update User";
@@ -30,14 +31,6 @@
     <div class="form-group">
         <label for="Phone">Phone</label>
         <input type="text" id="Phone" name="Phone" class="form-control" value="@Model.Phone" />
-    </div>
-
-    <div class="form-group">
-        <label for="Role">Role</label>
-        <select id="Role" name="Role" class="form-control" asp-for="Role" required>
-            <option value="Admin" selected="@(Model.Role == OnlineExam.Core.Enums.UserRoles.Admin)">Admin</option>
-            <option value="User" selected="@(Model.Role == OnlineExam.Core.Enums.UserRoles.User)">User</option>
-        </select>
     </div>
 
     <button type="submit" class="btn btn-primary">Update</button>
