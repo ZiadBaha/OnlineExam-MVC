@@ -1,21 +1,19 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OnlineExam.Core.Entities.Identity;
+using OnlineExam.Infrastructure.Seeding;
 using OnlineExam.Web.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
 builder.Services.AddControllersWithViews();
 
-// Organize the services in separate classes using extension methods
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -27,17 +25,25 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Routing configuration
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
 
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+    await AdminSeeder.SeedAsync(userManager, roleManager);
+}
+
+
+app.Run();
 
 
 #region MyRegion

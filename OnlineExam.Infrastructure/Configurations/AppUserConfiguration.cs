@@ -13,17 +13,26 @@ namespace OnlineExam.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
-            builder.Property(u => u.FirstName).IsRequired().HasMaxLength(100);
-            builder.Property(u => u.LastName).IsRequired().HasMaxLength(100);
-            builder.Property(u => u.PhoneNumber).HasMaxLength(100);
+            builder.Property(u => u.FirstName)
+                   .IsRequired()
+                   .HasMaxLength(100);
 
+            builder.Property(u => u.LastName)
+                   .IsRequired()
+                   .HasMaxLength(100);
+
+            builder.HasIndex(u => u.PhoneNumber)
+                   .IsUnique(true);
+
+            builder.HasIndex(u => u.Email)
+                   .IsUnique(true); 
+
+            builder.Property(u => u.Role)
+                   .HasConversion<string>();
 
             builder.HasMany(u => u.ExamResults)
                    .WithOne(er => er.User)
                    .HasForeignKey(er => er.UserId);
-
-            builder.Property(u => u.Role)
-                   .HasConversion<string>();
         }
     }
 }

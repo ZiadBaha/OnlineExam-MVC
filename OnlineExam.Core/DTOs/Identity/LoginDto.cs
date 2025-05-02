@@ -9,10 +9,12 @@ namespace OnlineExam.Core.DTOs.Identity
 {
     public class LoginDto
     {
-        [Required, EmailAddress]
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
-        [Required, DataType(DataType.Password)]
+        [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 

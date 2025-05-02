@@ -26,10 +26,6 @@ namespace OnlineExam.Core.DTOs.Identity
 
         [Required, Compare("Password")]
         public string ConfirmPassword { get; set; }
-
-        [Required]
-        public string Role { get; set; }
-
         [Phone]
         public string? Phone { get; set; }
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using OnlineExam.Core.Entities.Identity;
 using OnlineExam.Infrastructure.Data.DbContext;
 
 namespace OnlineExam.Web.Extentions
@@ -7,11 +8,14 @@ namespace OnlineExam.Web.Extentions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services)
         {
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             return services;
+
+
         }
+
     }
 }

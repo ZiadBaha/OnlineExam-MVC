@@ -13,7 +13,7 @@ namespace OnlineExam.Core.Entities.Identity
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Code { get; set; }
-        public UserRoles Role { get; set; }
+        public UserRoles Role { get; set; } = UserRoles.User;
 
         public ICollection<ExamResult> ExamResults { get; set; } = new HashSet<ExamResult>();
     }

@@ -1,0 +1,49 @@
+﻿@model OnlineExam.Core.DTOs.Identity.UpdateUserDto
+
+@{
+    ViewData["Title"] = "Update User";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post" asp-action="UpdateUser">
+    <div class="form-group">
+        <label for="Id">User Id</label>
+        <input type="text" id="Id" name="Id" class="form-control" value="@Model.Id" required readonly />
+    </div>
+
+    <div class="form-group">
+        <label for="FirstName">First Name</label>
+        <input type="text" id="FirstName" name="FirstName" class="form-control" value="@Model.FirstName" required />
+    </div>
+
+    <div class="form-group">
+        <label for="LastName">Last Name</label>
+        <input type="text" id="LastName" name="LastName" class="form-control" value="@Model.LastName" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="email" id="Email" name="Email" class="form-control" value="@Model.Email" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Phone">Phone</label>
+        <input type="text" id="Phone" name="Phone" class="form-control" value="@Model.Phone" />
+    </div>
+
+    <div class="form-group">
+        <label for="Role">Role</label>
+        <select id="Role" name="Role" class="form-control" asp-for="Role" required>
+            <option value="Admin" selected="@(Model.Role == OnlineExam.Core.Enums.UserRoles.Admin)">Admin</option>
+            <option value="User" selected="@(Model.Role == OnlineExam.Core.Enums.UserRoles.User)">User</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-warning mt-3">@ViewBag.Message</div>
+}
