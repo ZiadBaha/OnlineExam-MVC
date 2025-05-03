@@ -1,4 +1,5 @@
-﻿using OnlineExam.Core.Enums;
+﻿using OnlineExam.Core.DTOs.Program.questionDto;
+using OnlineExam.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace OnlineExam.Core.DTOs.Program.ExamDto
         public int Id { get; set; }
         public string Title { get; set; }
         public ExamDifficulty Difficulty { get; set; }
+        public List<QuestionDto> questionDtos { get; set; } = new();
     }
 }

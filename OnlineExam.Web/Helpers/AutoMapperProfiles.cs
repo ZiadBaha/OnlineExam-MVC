@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using OnlineExam.Core.DTOs.Identity;
+using OnlineExam.Core.DTOs.Program;
+using OnlineExam.Core.DTOs.Program.ChoiceDto;
 using OnlineExam.Core.DTOs.Program.ExamDto;
+using OnlineExam.Core.DTOs.Program.questionDto;
+using OnlineExam.Core.DTOs.Program.ResultDto;
 using OnlineExam.Core.Entities;
 using OnlineExam.Core.Entities.Identity;
 using OnlineExam.Core.Enums;
@@ -34,10 +38,31 @@ namespace OnlineExam.Web.Helpers
             CreateMap<UpdateUserDto, AppUser>().ReverseMap();
 
 
+            CreateMap<Exam, GetExamDto>()
+                .ForMember(dest => dest.Difficulty, opt => opt.MapFrom(src => src.Difficulty.ToString())); // Converting enum to string for display
+            CreateMap<AddExamDto, Exam>()
+                .ForMember(dest => dest.Difficulty, opt => opt.MapFrom(src => Enum.Parse<ExamDifficulty>(src.Difficulty.ToString()))); // Converting string to enum
+            CreateMap<UpdateExamDto, Exam>()
+                .ForMember(dest => dest.Difficulty, opt => opt.MapFrom(src => Enum.Parse<ExamDifficulty>(src.Difficulty.ToString())));
 
-            CreateMap<AddExamDto, Exam>();
-            CreateMap<UpdateExamDto, Exam>();
-            CreateMap<Exam, GetExamDto>();
+            CreateMap<Choice, choiceDto>();
+            CreateMap<ChoiceCreateDto, Choice>();
+            CreateMap<ChoiceUpdateDto, Choice>();
+
+            CreateMap<ExamResult, ExamResultDto>();
+            CreateMap<ExamResultCreateDto, ExamResult>();
+            CreateMap<UpdateExamResultDto, ExamResult>();
+      
+            CreateMap<Question, QuestionDto>();
+            CreateMap<QuestionCreateDto, Question>();
+            CreateMap<QuestionUpdateDto, Question>();
+
+            CreateMap<SubmitExamDto, ExamResultCreateDto>()
+             .ForMember(dest => dest.CorrectAnswers, opt => opt.MapFrom(src => src.AnswerIds.Count(a => a == 1))) 
+             .ForMember(dest => dest.TotalQuestions, opt => opt.MapFrom(src => src.AnswerIds.Count))
+             .ForMember(dest => dest.Score, opt => opt.MapFrom(src => (int)((src.AnswerIds.Count(a => a == 1) / (double)src.AnswerIds.Count) * 100)))
+             .ForMember(dest => dest.IsPassed, opt => opt.MapFrom(src => (int)((src.AnswerIds.Count(a => a == 1) / (double)src.AnswerIds.Count) * 100) >= 60));
+
 
         }
     }

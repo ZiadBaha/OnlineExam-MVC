@@ -1,32 +1,28 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OnlineExam.Application.Services.Admin;
-using OnlineExam.Core.DTOs.Program.ExamDto;
-using OnlineExam.Core.Enums;
-using OnlineExam.Infrastructure.Repositories.Auth.Admin;
+using OnlineExam.Core.DTOs.Program.questionDto;
 
 namespace OnlineExam.Web.Controllers.Admin
 {
-    [Authorize(Roles = "Admin")]
-    public class ExamController : Controller
+    public class QuestionController : Controller
     {
-        private readonly IExamService _service;
+        private readonly IQuestionService _service;
 
-        public ExamController(IExamService service)
+        public QuestionController(IQuestionService service)
         {
             _service = service;
         }
 
         public async Task<IActionResult> Index()
         {
-            var exams = await _service.GetAllAsync();
-            return View(exams.Data);
+            var questions = await _service.GetAllAsync();
+            return View(questions.Data);
         }
 
         public IActionResult Create() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Create(AddExamDto dto)
+        public async Task<IActionResult> Create(QuestionCreateDto dto)
         {
             if (!ModelState.IsValid) return View(dto);
             await _service.AddAsync(dto);
@@ -35,20 +31,20 @@ namespace OnlineExam.Web.Controllers.Admin
 
         public async Task<IActionResult> Edit(int id)
         {
-            var exam = await _service.GetByIdAsync(id);
-            if (!exam.Success) return NotFound();
+            var question = await _service.GetByIdAsync(id);
+            if (!question.Success) return NotFound();
 
-            var dto = new UpdateExamDto
+            var dto = new QuestionUpdateDto
             {
-                Id = exam.Data.Id,
-                Title = exam.Data.Title,
-                Difficulty = (ExamDifficulty)Enum.Parse(typeof(ExamDifficulty), exam.Data.Difficulty.ToString())
+                Id = question.Data.Id,
+                Title = question.Data.Title,
+                ExamId = question.Data.ExamId
             };
             return View(dto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(UpdateExamDto dto)
+        public async Task<IActionResult> Edit(QuestionUpdateDto dto)
         {
             if (!ModelState.IsValid) return View(dto);
             await _service.UpdateAsync(dto);
@@ -57,8 +53,8 @@ namespace OnlineExam.Web.Controllers.Admin
 
         public async Task<IActionResult> Delete(int id)
         {
-            var exam = await _service.GetByIdAsync(id);
-            return View(exam.Data);
+            var question = await _service.GetByIdAsync(id);
+            return View(question.Data);
         }
 
         [HttpPost, ActionName("Delete")]

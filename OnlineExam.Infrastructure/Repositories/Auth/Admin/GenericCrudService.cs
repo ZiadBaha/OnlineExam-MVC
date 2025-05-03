@@ -34,7 +34,7 @@ namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
             return new MessagesResponse<string>(201, "Created");
         }
 
-        public async Task<MessagesResponse<string>> UpdateAsync(TUpdateDto dto)
+        public virtual async Task<MessagesResponse<string>> UpdateAsync(TUpdateDto dto)
         {
             var entity = _mapper.Map<TEntity>(dto);
             _dbSet.Update(entity);

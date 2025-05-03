@@ -29,7 +29,10 @@ namespace OnlineExam.Web.Extentions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IAdminUserService, AdminUserService>();
             services.AddScoped<IGenericCrudService<AddExamDto, UpdateExamDto, GetExamDto>, ExamService>();
-
+            services.AddScoped<IExamService, ExamService>();
+            services.AddScoped<IChoiceService, ChoiceService>();
+            services.AddScoped<IExamResultService, ExamResultService>();
+            services.AddScoped<IQuestionService, QuestionService>();
 
             return services;
         }

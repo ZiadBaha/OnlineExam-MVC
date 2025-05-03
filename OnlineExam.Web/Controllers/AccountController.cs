@@ -43,5 +43,4 @@ namespace OnlineExam.Web.Controllers
             return RedirectToAction("Login", "Account");
         }
     }
-
 }
