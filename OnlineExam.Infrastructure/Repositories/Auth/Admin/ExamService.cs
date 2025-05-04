@@ -14,7 +14,7 @@ namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
 {
     public class ExamService : GenericCrudService<Exam, AddExamDto, UpdateExamDto, GetExamDto>, IExamService
     {
-        public ExamService(IMapper mapper, DbContext context) : base(mapper, context)
+        public ExamService(IMapper mapper, ApplicationDbContext context) : base(mapper, context)
         {
         }
 

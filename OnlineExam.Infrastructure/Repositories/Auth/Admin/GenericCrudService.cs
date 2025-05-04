@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OnlineExam.Infrastructure.Data.DbContext;
 
 namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
 {
@@ -16,10 +17,10 @@ namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
      where TEntity : BaseEntity
     {
         protected readonly IMapper _mapper;
-        protected readonly DbContext _context;
+        protected readonly ApplicationDbContext _context;
         protected readonly DbSet<TEntity> _dbSet;
 
-        public GenericCrudService(IMapper mapper, DbContext context)
+        public GenericCrudService(IMapper mapper, ApplicationDbContext context)
         {
             _mapper = mapper;
             _context = context;

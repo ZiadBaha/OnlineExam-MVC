@@ -4,6 +4,7 @@ using OnlineExam.Application.Services.Admin;
 using OnlineExam.Core.DTOs.Program.ResultDto;
 using OnlineExam.Core.Entities;
 using OnlineExam.Core.Entities.Common;
+using OnlineExam.Infrastructure.Data.DbContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
 {
     public class ExamResultService : GenericCrudService<ExamResult, ExamResultCreateDto, UpdateExamResultDto, ExamResultDto>, IExamResultService
     {
-        public ExamResultService(IMapper mapper, DbContext context) : base(mapper, context) 
+        public ExamResultService(IMapper mapper, ApplicationDbContext context) : base(mapper, context) 
         { 
 
         
