@@ -25,7 +25,7 @@ namespace OnlineExam.Web.Controllers.User
             var result = await _examService.GetAllAsync(); // النتيجة تحتوي على result.Data وهو من نوع List<GetExamDto>
             return View(result.Data);
         }
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> ExamQuestions(int id)
         {
             var exam = await _examService.GetByIdAsync(id);
 

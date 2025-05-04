@@ -1,0 +1,101 @@
+﻿@model IEnumerable<OnlineExam.Core.DTOs.Program.questionDto.QuestionDto>
+@{
+    Layout = "_UserLayout";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Quiz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">QuizApp</a>
+            <div class="navbar-nav ms-auto">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle me-1"></i>
+                        <span class="user-name"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="dashboard.html">
+                                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        <div id="alerts-container"></div>
+
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4 id="quizTitle" class="mb-0"></h4>
+            </div>
+            <div class="card-body">
+                <p id="quizDescription" class="lead"></p>
+                <hr>
+                <form id="quizForm">
+                    <div id="quizQuestionsContainer">
+                        <!-- Questions will be added here by JavaScript -->
+                    </div>
+                    <div class="d-grid mt-4">
+                        <button type="button" class="btn btn-success btn-lg" id="loadQuizBtn">
+                            <i class="fas fa-paper-plane me-2"></i>Load Quiz
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/user.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#loadQuizBtn').click(function() {
+                let examId = 1; // Example examId, replace with dynamic value if needed
+
+                $.ajax({
+                    url: '/YourController/GetByExamIdAsync', // Replace with the correct action URL
+                    type: 'GET',
+                    data: { examId: examId },
+                    success: function(data) {
+                        console.log(data); // Log the response
+                        // Optionally, you can update the UI with the returned data (questions)
+                    },
+                    error: function(error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
