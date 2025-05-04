@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 namespace OnlineExam.Application.Services.Admin
 {
     public interface IChoiceService : IGenericCrudService<ChoiceCreateDto, ChoiceUpdateDto, choiceDto>
-    { 
+    {
+        Task<List<choiceDto>> GetChoicesByQuestionIdAsync(int questionId);
 
     }
 

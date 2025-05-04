@@ -1,0 +1,88 @@
+/* General styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Navbar styles */
+.navbar-brand {
+    font-weight: 700;
+}
+
+/* Card styles */
+.card {
+    border: none;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(33, 40, 50, 0.15);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    font-weight: 600;
+}
+
+/* Button styles */
+.btn {
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: #4e73df;
+    border-color: #4e73df;
+}
+
+.btn-primary:hover {
+    background-color: #2e59d9;
+    border-color: #2e59d9;
+}
+
+/* Alert styles */
+.alert {
+    border: none;
+}
+
+/* List group styles */
+.list-group-item {
+    border-left: none;
+    border-right: none;
+}
+
+.list-group-item:first-child {
+    border-top: none;
+}
+
+/* Progress bar styles */
+.progress {
+    height: 1rem;
+    border-radius: 0.35rem;
+}
+
+.progress-bar {
+    font-size: 0.75rem;
+}
+
+/* Form styles */
+.form-control,
+.form-select {
+    padding: 0.5rem 0.75rem;
+}
+
+/* Utility classes */
+.lead {
+    font-weight: 400;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1.5rem;
+    }
+}
+
+.aspect-square {
+    aspect-ratio: 1 / 1;
+}

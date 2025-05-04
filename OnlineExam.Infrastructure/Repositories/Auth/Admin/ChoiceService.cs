@@ -15,6 +15,13 @@ namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
     public class ChoiceService : GenericCrudService<Choice, ChoiceCreateDto, ChoiceUpdateDto, choiceDto>, IChoiceService
     {
         public ChoiceService(IMapper mapper, ApplicationDbContext context) : base(mapper, context) { }
+        public async Task<List<choiceDto>> GetChoicesByQuestionIdAsync(int questionId)
+        {
+            var choices = await _context.Choices
+                .Where(c => c.QuestionId == questionId)
+                .ToListAsync();
+            return _mapper.Map<List<choiceDto>>(choices);
+        }
     }
 
 }

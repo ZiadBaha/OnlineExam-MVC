@@ -10,6 +10,7 @@ namespace OnlineExam.Web.Controllers.Admin
     {
         private readonly IAdminUserService _adminUserService;
 
+
         public AdminUsersController(IAdminUserService adminUserService)
         {
             _adminUserService = adminUserService;

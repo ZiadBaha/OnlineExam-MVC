@@ -1,0 +1,169 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/admin.css" />
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-secondary text-white" id="sidebar-wrapper">
+            <div class="sidebar-heading border-bottom text-center py-3">
+                <h4><i class="fas fa-tachometer-alt text-warning me-2"></i>Quiz Admin</h4>
+            </div>
+            <div class="list-group list-group-flush gap-3 mt-3">
+                <a asp-controller="Dashboard" asp-action="Index" class="list-group-item list-group-item-action bg-secondary text-white active">
+                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                </a>
+                <a asp-controller="Exam" asp-action="Index" class="list-group-item list-group-item-action bg-secondary text-white">
+                    <i class="fas fa-question-circle me-2"></i>Quizzes
+                </a>
+                <a asp-controller="Users" asp-action="Index" class="list-group-item list-group-item-action bg-secondary text-white">
+                    <i class="fas fa-users me-2"></i>Users
+                </a>
+                <a asp-controller="Reports" asp-action="Grades" class="list-group-item list-group-item-action bg-secondary text-white">
+                    <i class="fas fa-chart-bar me-2"></i>Reports
+                </a>
+                <a href="#" id="logoutBtn" class="list-group-item list-group-item-action bg-secondary text-white">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                </a>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg py-3 navbar-light bg-secondary border-start">
+                <div class="container-fluid">
+                    <button class="btn btn-primary" id="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h4 class="ms-3 mb-0">Dashboard</h4>
+                </div>
+            </nav>
+
+            <div class="container-fluid px-4 py-4">
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card bg-primary text-white h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title">Total Quizzes</h6>
+                                        <h2 class="mb-0" id="totalQuizzes">0</h2>
+                                    </div>
+                                    <i class="fas fa-question-circle fa-3x opacity-50"></i>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-transparent">
+                                <a asp-controller="Exam" asp-action="Index" class="text-white stretched-link">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card bg-success text-white h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title">Total Users</h6>
+                                        <h2 class="mb-0" id="totalUsers">0</h2>
+                                    </div>
+                                    <i class="fas fa-users fa-3x opacity-50"></i>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-transparent">
+                                <a asp-controller="Users" asp-action="Index" class="text-white stretched-link">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card bg-info text-white h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title">Total Attempts</h6>
+                                        <h2 class="mb-0" id="totalAttempts">0</h2>
+                                    </div>
+                                    <i class="fas fa-chart-line fa-3x opacity-50"></i>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-transparent">
+                                <a asp-controller="Reports" asp-action="Grades" class="text-white stretched-link">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Recent Quiz Attempts</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>User</th>
+                                                <th>Quiz</th>
+                                                <th>Score</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="recentAttempts">
+                                            <!-- Data from JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Quick Actions</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-grid gap-2">
+                                    <a asp-controller="Quizzes" asp-action="Create" class="btn btn-primary">
+                                        <i class="fas fa-plus-circle me-2"></i>Create New Quiz
+                                    </a>
+                                    <a asp-controller="Users" asp-action="Create" class="btn btn-success">
+                                        <i class="fas fa-user-plus me-2"></i>Add New User
+                                    </a>
+                                    <a asp-controller="Reports" asp-action="Grades" class="btn btn-info">
+                                        <i class="fas fa-chart-pie me-2"></i>View Reports
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/auth.js"></script>
+    <script src="~/js/admin.js"></script>
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+
+        $(document).ready(function () {
+            loadDashboardStats();
+        });
+    </script>
+</body>
+</html>

@@ -32,7 +32,11 @@ namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
             var entity = _mapper.Map<TEntity>(dto);
             await _dbSet.AddAsync(entity);
             await _context.SaveChangesAsync();
-            return new MessagesResponse<string>(201, "Created");
+            // Get the ID of the newly added entity (assumes it has a property named "Id")
+            var idProperty = entity.GetType().GetProperty("Id");
+            var idValue = idProperty?.GetValue(entity)?.ToString();
+            // Return the ID as a string
+            return new MessagesResponse<string>(201, idValue ?? "Created");
         }
 
         public virtual async Task<MessagesResponse<string>> UpdateAsync(TUpdateDto dto)
@@ -62,8 +66,7 @@ namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
 
             var dto = _mapper.Map<TGetDto>(entity);
             return new MessagesResponse<TGetDto>(200, dto);
-        }
-
+        }  
         public async Task<MessagesResponse<List<TGetDto>>> GetAllAsync()
         {
             var entities = await _dbSet.ToListAsync();
