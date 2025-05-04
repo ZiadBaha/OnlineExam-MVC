@@ -50,16 +50,35 @@ OnlineExam/
 - Update-Database
 ```
 ---
-## 📸 Screenshots
 
-### 🖼️ Login Page
-![Login Page] (https://imgur.com/46qq1d8.png)
+## 📸 Project Screenshots
 
-### 🖼️ Dashboard
-![Dashboard] (https://imgur.com/b7Wdrru.png)
+Here’s a quick look at how the **Online Exam System** looks and works. These screenshots showcase the main features and the clean UI of the platform.
 
-### 🖼️ Exam Creation
-![quize Resultn] (https://i.imgur.com/zzzzz3.png](https://imgur.com/m0ZvASsp.g)
+---
+
+<p align="center">
+  <img src="https://i.imgur.com/b7Wdrru.png" alt="Dashboard Screenshot" width="300"/>
+  <img src="https://i.imgur.com/46qq1d8.png" alt="Exam Page" width="300"/>
+  <img src="https://i.imgur.com/m0ZvASs.png" alt="Question Page" width="300"/>
+</p>
+<br/>
+
+<p align="center">
+  <img src="https://i.imgur.com/IDt4Z6w.png" alt="Student Result Page" width="300"/>
+  <img src="https://i.imgur.com/iL5i0zd.png" alt="User Profile Page" width="300"/>
+</p>
+
+---
+
+### Descriptions:
+- **🖥️ Admin Dashboard**: Admin overview of all exam-related data.
+- **📝 Create New Exam**: Easily create and manage new exams.
+- **❓ Add Questions to Exam**: Add questions and configure your exams with ease.
+- **📊 Student Exam Results**: View student results and performance metrics.
+- **🙍‍♂️ User Profile & Info**: Users can view and update their profiles.
+
+
 
 ---
 ## ⚙️ Getting Started
