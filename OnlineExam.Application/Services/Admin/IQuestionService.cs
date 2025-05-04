@@ -10,7 +10,7 @@ namespace OnlineExam.Application.Services.Admin
     public interface IQuestionService : IGenericCrudService<QuestionCreateDto, QuestionUpdateDto, QuestionDto> 
     {
 
-        Task<List<QuestionDto>> GetQuestionsByExamIdAsync(int examId);
+        Task<IEnumerable<QuestionDto>> GetAllQuestionsOfExam(int examId);
     }
 
 }

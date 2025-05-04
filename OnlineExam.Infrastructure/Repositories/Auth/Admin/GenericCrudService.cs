@@ -27,7 +27,7 @@ namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
             _dbSet = context.Set<TEntity>();
         }
 
-        public async Task<MessagesResponse<string>> AddAsync(TAddDto dto)
+        public virtual async Task<MessagesResponse<string>> AddAsync(TAddDto dto)
         {
             var entity = _mapper.Map<TEntity>(dto);
             await _dbSet.AddAsync(entity);
@@ -58,7 +58,7 @@ namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
             return new MessagesResponse<string>(204, "Deleted");
         }
 
-        public async Task<MessagesResponse<TGetDto>> GetByIdAsync(int id)
+        public virtual async Task<MessagesResponse<TGetDto>> GetByIdAsync(int id)
         {
             var entity = await _dbSet.FindAsync(id);
             if (entity is null)
@@ -67,7 +67,7 @@ namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
             var dto = _mapper.Map<TGetDto>(entity);
             return new MessagesResponse<TGetDto>(200, dto);
         }  
-        public async Task<MessagesResponse<List<TGetDto>>> GetAllAsync()
+        public virtual async Task<MessagesResponse<List<TGetDto>>> GetAllAsync()
         {
             var entities = await _dbSet.ToListAsync();
             var dtoList = _mapper.Map<List<TGetDto>>(entities);

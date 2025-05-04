@@ -15,15 +15,17 @@ namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
     public class QuestionService : GenericCrudService<Question, QuestionCreateDto, QuestionUpdateDto, QuestionDto>, IQuestionService
     {
         public QuestionService(IMapper mapper, ApplicationDbContext context) : base(mapper, context) { }
-        public async Task<List<QuestionDto>> GetQuestionsByExamIdAsync(int examId)
+    
+        public async Task<IEnumerable<QuestionDto>> GetAllQuestionsOfExam(int examId)
         {
             var questions = await _context.Questions
                 .Where(q => q.ExamId == examId)
+                .Include(q => q.Choices) 
                 .ToListAsync();
 
-            return _mapper.Map<List<QuestionDto>>(questions);
-        }
+            var questionDtos = _mapper.Map<IEnumerable<QuestionDto>>(questions);
 
+            return questionDtos;
+        }
     }
 }
-

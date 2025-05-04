@@ -1,4 +1,6 @@
-﻿using OnlineExam.Core.DTOs.Program.ExamDto;
+﻿using OnlineExam.Core.DTOs.Program;
+using OnlineExam.Core.DTOs.Program.ExamDto;
+using OnlineExam.Core.DTOs.Program.ResultDto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,7 @@ namespace OnlineExam.Application.Services.Admin
 {
     public interface IExamService : IGenericCrudService<AddExamDto, UpdateExamDto, GetExamDto>
     {
+        Task<ExamResultDto> SubmitExamAsync(SubmitExamDto dto);
 
     }
 
