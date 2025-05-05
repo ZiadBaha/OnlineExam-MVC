@@ -41,7 +41,7 @@ namespace OnlineExam.Web.Controllers
             var roles = await _userManager.GetRolesAsync(user!);
 
             if (roles.Contains("Admin"))
-                return RedirectToAction("Dashboard", "Admin");
+                return RedirectToAction("Index", "Dashboard");
             else
                 return RedirectToAction("Index", "Quizes");
         }

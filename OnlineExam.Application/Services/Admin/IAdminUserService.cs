@@ -12,6 +12,9 @@ namespace OnlineExam.Application.Services.Admin
     {
         Task<MessagesResponse<string>> AddUserAsync(AddUserDto model);
         Task<MessagesResponse<string>> UpdateUserAsync(UpdateUserDto model);
+        Task<MessagesResponse<string>> DeleteUserAsync(string userId);
+        Task<List<UpdateUserDto>> GetAllUsersAsync();
+        Task<UpdateUserDto?> GetUserByIdAsync(string id);
 
     }
 }

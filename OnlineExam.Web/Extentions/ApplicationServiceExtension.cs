@@ -33,6 +33,7 @@ namespace OnlineExam.Web.Extentions
             services.AddScoped<IChoiceService, ChoiceService>();
             services.AddScoped<IExamResultService, ExamResultService>();
             services.AddScoped<IQuestionService, QuestionService>();
+            services.AddScoped<IDashboardService, DashboardService>();
 
             return services;
         }

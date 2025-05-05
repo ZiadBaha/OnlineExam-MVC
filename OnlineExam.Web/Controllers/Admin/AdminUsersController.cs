@@ -10,50 +10,66 @@ namespace OnlineExam.Web.Controllers.Admin
     {
         private readonly IAdminUserService _adminUserService;
 
-
         public AdminUsersController(IAdminUserService adminUserService)
         {
             _adminUserService = adminUserService;
         }
 
-        [HttpGet]
-        public IActionResult AddUser()
+        public async Task<IActionResult> Index()
+        {
+            var users = await _adminUserService.GetAllUsersAsync();
+            return View(users);
+        }
+
+        public async Task<IActionResult> Details(string id)
+        {
+            var user = await _adminUserService.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                TempData["Error"] = "User not found.";
+                return RedirectToAction("Index");
+            }
+
+            return View(user);
+        }
+
+        public IActionResult Add()
         {
             return View(new AddUserDto());
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUser(AddUserDto model)
+        public async Task<IActionResult> Add(AddUserDto model)
         {
             if (!ModelState.IsValid)
+                return View(model);
+
+            var result = await _adminUserService.AddUserAsync(model);
+
+            if (!result.Success)
             {
-                ViewBag.Message = "Please check the input fields.";
+                ViewBag.Message = result.Message;
                 return View(model);
             }
 
-            var response = await _adminUserService.AddUserAsync(model);
-
-            if (response.StatusCode == 201) // Success
-            {
-                ViewBag.Message = "User created successfully!";
-                return RedirectToAction("AddUser");
-            }
-            else
-            {
-                ViewBag.Message = response.Message;
-                return View(model);
-            }
+            TempData["Success"] = result.Message;
+            return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public IActionResult UpdateUser(string id)
+        public async Task<IActionResult> Update(string id)
         {
-           
-            return View();
+            var user = await _adminUserService.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                TempData["Error"] = "User not found.";
+                return RedirectToAction("Index");
+            }
+
+            return View(user);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateUser(UpdateUserDto model)
+        public async Task<IActionResult> Update(UpdateUserDto model)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -66,7 +82,25 @@ namespace OnlineExam.Web.Controllers.Admin
                 return View(model);
             }
 
-            return RedirectToAction("Index", "Home");
+            TempData["Success"] = result.Message;
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var result = await _adminUserService.DeleteUserAsync(id);
+
+            if (!result.Success)
+            {
+                TempData["Error"] = result.Message;
+            }
+            else
+            {
+                TempData["Success"] = result.Message;
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

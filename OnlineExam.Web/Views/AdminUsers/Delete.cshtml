@@ -1,0 +1,16 @@
+﻿@using OnlineExam.Core.DTOs.Identity
+@model OnlineExam.Core.DTOs.Identity.DeleteUserDto
+
+@{
+    ViewData["Title"] = "Delete User";
+}
+
+<h2>Delete Confirmation</h2>
+
+<p>Are you sure you want to delete this user?</p>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="UserId" />
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

@@ -33,7 +33,7 @@ namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
             }
 
             var user = _mapper.Map<AppUser>(model);
-            user.Role = UserRoles.User; 
+            user.Role = UserRoles.User;
 
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
@@ -59,6 +59,36 @@ namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
 
             return new MessagesResponse<string>(200, "User updated successfully.");
         }
+
+
+        public async Task<MessagesResponse<string>> DeleteUserAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return new MessagesResponse<string>(404, null, "User not found.");
+
+            var result = await _userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+                return new MessagesResponse<string>(400, null, string.Join(", ", result.Errors.Select(e => e.Description)));
+
+            return new MessagesResponse<string>(200, "User deleted successfully.");
+        }
+
+        public async Task<List<UpdateUserDto>> GetAllUsersAsync()
+        {
+            var users = _userManager.Users.ToList();
+            return _mapper.Map<List<UpdateUserDto>>(users);
+        }
+
+        public async Task<UpdateUserDto?> GetUserByIdAsync(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return null;
+
+            return _mapper.Map<UpdateUserDto>(user);
+        }
+
 
     }
 
