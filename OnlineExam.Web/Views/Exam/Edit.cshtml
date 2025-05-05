@@ -1,25 +1,114 @@
-﻿@model OnlineExam.Core.DTOs.Program.ExamDto.UpdateExamDto
-@using OnlineExam.Core.Enums
+﻿@using OnlineExam.Core.Enums
+@model OnlineExam.Core.DTOs.Program.ExamDto.UpdateExamDto
 
 @{
     ViewData["Title"] = "Edit Exam";
+    Layout = null;
 }
 
-<h1>Edit Exam</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/admin.css">
+</head>
 
-<form asp-action="Edit" method="post">
-    <div class="form-group">
-        <label for="Title">Title</label>
-        <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title" required />
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-secondary text-white" id="sidebar-wrapper">
+            <!-- Sidebar content (same as the Details view) -->
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-secondary border-start border-end py-3">
+                <div class="container-fluid">
+                    <button class="btn btn-primary" id="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h4 class="ms-3 mb-0">Edit Exam</h4>
+                    <div class="ms-auto">
+                        <a asp-controller="Exam" asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-1"></i>Back to Exams
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid px-4 py-4">
+                <form method="post">
+                    <div class="card mb-4">
+                        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">@Model.Title</h5>
+                            <span class="badge bg-info">@Model.Difficulty</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="Title" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="Difficulty" class="form-label">Difficulty</label>
+                                <div class="mb-3">
+                                    <label for="quizDifficulty" class="form-label">Difficulty</label>
+                                    <select asp-for="Difficulty" class="form-control"
+                                            asp-items="Html.GetEnumSelectList<ExamDifficulty>()">
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <h5>Questions</h5>
+                            <div class="accordion" id="questionsAccordion">
+                                @foreach (var question in Model.questionDtos)
+                                {
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading@question.Id">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse@question.Id" aria-expanded="true" aria-controls="collapse@question.Id">
+                                                @question.Title
+                                            </button>
+                                        </h2>
+                                        <div id="collapse@question.Id" class="accordion-collapse collapse" aria-labelledby="heading@question.Id" data-bs-parent="#questionsAccordion">
+                                            <div class="accordion-body">
+                                                <div class="mb-3">
+                                                    <label for="QuestionTitle@question.Id" class="form-label">Question Title</label>
+                                                    <input type="text" class="form-control" id="QuestionTitle@question.Id" name="QuestionDtos[@question.Id].Title" value="@question.Title" required />
+                                                </div>
+
+                                                <h6>Choices</h6>
+                                                @foreach (var choice in question.Choices)
+                                                {
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="QuestionDtos[@question.Id].Choices[@choice.Id].IsCorrect" value="true" @(choice.IsCorrect ? "checked" : "") />
+                                                        <label class="form-check-label" for="Choice@choice.Id">@choice.Text</label>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <input type="text" class="form-control mt-2" name="QuestionDtos[@question.Id].Choices[@choice.Id].Text" value="@choice.Text" />
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Difficulty"></label>
-        <select asp-for="Difficulty" class="form-control" asp-items="Html.GetEnumSelectList<ExamDifficulty>()">
-            <option value="">-- Select Difficulty --</option>
-        </select>
-        <span asp-validation-for="Difficulty" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Update Exam</button>
-</form>
+    <!-- Optional JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

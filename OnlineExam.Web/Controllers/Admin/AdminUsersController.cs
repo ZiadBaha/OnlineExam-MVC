@@ -86,7 +86,7 @@ namespace OnlineExam.Web.Controllers.Admin
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Delete(string id)
         {
             var result = await _adminUserService.DeleteUserAsync(id);

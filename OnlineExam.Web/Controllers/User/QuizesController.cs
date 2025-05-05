@@ -22,7 +22,7 @@ namespace OnlineExam.Web.Controllers.User
         }
         public async Task<IActionResult> Index()
         {
-            var result = await _examService.GetAllAsync(); // النتيجة تحتوي على result.Data وهو من نوع List<GetExamDto>
+            var result = await _examService.GetAllAsync();
             return View(result.Data);
         }
         public async Task<IActionResult> ExamQuestions(int id)
@@ -50,7 +50,7 @@ namespace OnlineExam.Web.Controllers.User
         public async Task<IActionResult> SubmitExam(SubmitExamDto dto)
         {
             var result = await _examService.SubmitExamAsync(dto);
-            return Ok(result); // Or pass it to a view
+            return Ok(result);
         }
 
 

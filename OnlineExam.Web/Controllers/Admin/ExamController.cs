@@ -9,7 +9,7 @@ using OnlineExam.Infrastructure.Repositories.Auth.Admin;
 
 namespace OnlineExam.Web.Controllers.Admin
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class ExamController : Controller
     {
         private readonly IExamService _service;
@@ -29,21 +29,40 @@ namespace OnlineExam.Web.Controllers.Admin
             var exams = await _service.GetAllAsync();
             return View(exams.Data);
         }
+        public async Task<IActionResult> Details(int id)
+        {
+            var exam = await _service.GetByIdAsync(id);
 
-        // في الـ GET
+            if (!exam.Success)
+                return NotFound();
+
+            Console.WriteLine($"Exam: {exam.Data.Title}, Difficulty: {exam.Data.Difficulty}");
+
+            foreach (var question in exam.Data.questionDtos)
+            {
+                Console.WriteLine($"Question: {question.Title}");
+
+                foreach (var choice in question.Choices)
+                {
+                    Console.WriteLine($"  - Choice: {choice.Text} (Id: {choice.Id})");
+                }
+            }
+
+            return View(exam.Data);
+        }
+
         public IActionResult Create()
         {
             var model = new AddExamWithQuestionsDto
             {
-                Questions = new List<QuestionCreateDto>() // تأكد هنا إنك بتستخدم نوع الـ QuestionCreateDto
+                Questions = new List<QuestionCreateDto>() 
             };
 
-            return View(model); // Return the initialized model to the view
+            return View(model); 
         }
 
-        // في الـ POST
         [HttpPost]
-        [HttpPost]
+ 
         public async Task<IActionResult> Create(AddExamWithQuestionsDto model)
         {
             if (!ModelState.IsValid)
@@ -59,7 +78,6 @@ namespace OnlineExam.Web.Controllers.Admin
                 return View(model);
             }
 
-            //add questions and choices
             foreach (var question in model.Questions)
             {
                
@@ -103,8 +121,10 @@ namespace OnlineExam.Web.Controllers.Admin
             {
                 Id = exam.Data.Id,
                 Title = exam.Data.Title,
-                Difficulty = (ExamDifficulty)Enum.Parse(typeof(ExamDifficulty), exam.Data.Difficulty.ToString())
+                Difficulty = (ExamDifficulty)Enum.Parse(typeof(ExamDifficulty), exam.Data.Difficulty.ToString()),
+                questionDtos = exam.Data.questionDtos 
             };
+
             return View(dto);
         }
 
@@ -112,21 +132,34 @@ namespace OnlineExam.Web.Controllers.Admin
         public async Task<IActionResult> Edit(UpdateExamDto dto)
         {
             if (!ModelState.IsValid) return View(dto);
-            await _service.UpdateAsync(dto);
+
+            var result = await _service.UpdateAsync(dto);
+            if (!result.Success)
+            {
+                ModelState.AddModelError("", "Error updating exam.");
+                return View(dto);
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
+
+
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var exam = await _service.GetByIdAsync(id);
-            return View(exam.Data);
-        }
+            var result = await _service.DeleteAsync(id);
 
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            await _service.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
+            if (!result.Success)
+            {
+                TempData["Error"] = result.Message;
+            }
+            else
+            {
+                TempData["Success"] = result.Message;
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

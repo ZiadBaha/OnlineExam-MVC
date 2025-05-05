@@ -87,19 +87,15 @@ namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
             return new MessagesResponse<GetExamDto>(200, examDto);
         }
 
-        // Implementing SubmitExamAsync as per the structure given
         public async Task<ExamResultDto> SubmitExamAsync(SubmitExamDto dto)
         {
-            // Get the correct answer IDs for the exam from the database
             var correctAnswerIds = await _context.Choices
                 .Where(c => c.Question.ExamId == dto.ExamId && c.IsCorrect)
                 .Select(c => c.Id)
                 .ToListAsync();
 
-            // Call ToAddResult to calculate the result from the provided answers
             var resultCreateDto = dto.ToAddResult();
 
-            // Create and save the result in the database
             var examResult = new ExamResult
             {
                 UserId = dto.UserId,
@@ -114,7 +110,6 @@ namespace OnlineExam.Infrastructure.Repositories.Auth.Admin
             _context.ExamResults.Add(examResult);
             await _context.SaveChangesAsync();
 
-            // Map the exam result to a DTO
             var examResultDto = new ExamResultDto
             {
                 UserId = examResult.UserId,
