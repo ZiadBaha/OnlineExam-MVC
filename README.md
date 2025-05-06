@@ -43,6 +43,11 @@ OnlineExam/
   "DefaultConnection": "server = . ; Database = OnlineExamDb ; Trusted_Connection = true ; MultipleActiveResultSets = True ;TrustServerCertificate=True"
 }
 ```
+## Admin Account 
+```
+Email = "ziadbahaa41@gmail.Com";
+Password = "246819@$Ziadbahaa!";
+```
 ---
 ## 3. Apply EF Migrations And Update Database
 ```
